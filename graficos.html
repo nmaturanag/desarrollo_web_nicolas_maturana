@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicadores y Métricas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
+            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
+            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
+            <li><a href="graficos.html">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Métricas</h2>
+            <p>Indicadores generales de participación en la comunidad.</p> 
+            <fieldset>
+                <legend>Horas dedicadas por Tipo de Miembro</legend>
+                <dl>
+                    <dt><b>Estudiantes:</b></dt> <dd>200 horas</dd>
+                    <dt><b>Académicos:</b></dt> <dd>80 horas</dd>
+                    <dt><b>Funcionarios:</b></dt> <dd>120 horas</dd>
+                </dl>
+            </fieldset>
+            <fieldset>
+                <legend>Horas dedicadas por Categoría</legend>
+                <dl>
+                    <dt><b>Tecnológicas:</b></dt> <dd>100 horas</dd>
+                    <dt><b>Deportivas:</b></dt> <dd>110 horas</dd>
+                    <dt><b>Artísticas:</b></dt> <dd>80 horas</dd>
+                    <dt><b>Recreativas:</b></dt> <dd>65 horas</dd>
+                    <dt><b>Sociales:</b></dt> <dd>45 horas</dd>
+                </dl>
+            </fieldset>
+        </section>
+        <section>
+            <h2>Gráficos</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 20px;">
+                <div style="width: 400px;">
+                    <h3>Distribución de Miembros</h3>
+                    <canvas id="graficoMiembros"></canvas>
+                </div>
+                <div style="width: 500px;">
+                    <h3>Actividades por Categoría</h3>
+                    <label for="filtro-grafico">Filtrar por:</label>
+                    <select id="filtro-grafico">
+                        <option value="todos">Todos los miembros</option>
+                        <option value="estudiante">Solo Estudiantes</option>
+                        <option value="academico">Solo Académicos</option>
+                        <option value="funcionario">Solo Funcionarios</option>
+                    </select>
+                    <br><br>
+                    <canvas id="graficoActividades"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // grafico de miembros
+        const contextoMiembros = document.getElementById('graficoMiembros').getContext('2d');
+        new Chart(contextoMiembros, {
+            type: 'bar',
+            data: {
+                labels: ['Estudiantes', 'Académicos', 'Funcionarios'],
+                datasets: [{
+                    label: 'Cantidad de Personas Registradas',
+                    data: [40, 15, 30],
+                    backgroundColor: ['blue', 'red', 'yellow']
+                }]
+            },
+            options: {scales: {y: {beginAtZero: true}}}
+        });
+        // gráfico de actividades
+        const datosFalsos = {
+            todos: [25, 40, 65, 15, 30],
+            estudiante: [5, 10, 10, 10, 5],
+            academico: [ 5,  5, 0,  5,  0],
+            funcionario: [ 10, 5, 5,  10,  0]
+        };
+        const contextoActividades = document.getElementById('graficoActividades').getContext('2d');
+        
+        let graficoActividades = new Chart(contextoActividades, {
+            type: 'bar',
+            data: {
+                labels: ['Artísticas', 'Deportivas', 'Tecnológicas', 'Sociales', 'Recreativas'],
+                datasets: [{
+                    label: 'Cantidad de Actividades',
+                    data: datosFalsos.todos,
+                    backgroundColor: '#4BC0C0'
+                }]
+            },
+            options: {scales: {y: { beginAtZero: true, max: 70}}}
+        });
+
+        document.getElementById('filtro-grafico').addEventListener('change', function() {
+            const seleccion = this.value;
+
+            graficoActividades.data.datasets[0].data = datosFalsos[seleccion];
+            graficoActividades.update();
+        });
+    </script>
+</body>
+</html>
