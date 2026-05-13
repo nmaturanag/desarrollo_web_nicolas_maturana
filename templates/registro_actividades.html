@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Actividades</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
     </head>
 <body>
     <header>
@@ -12,11 +12,11 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
-            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
-            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
-            <li><a href="graficos.html">Métricas</a></li>
+            <li><a href="{{url_for('index')}}">Inicio</a></li>
+            <li><a href="{{url_for('listado_miembros')}}">Listado de Miembros</a></li>
+            <li><a href="{{url_for('registro_miembros')}}">Registrar Miembro</a></li>
+            <li><a href="{{url_for('registro_actividades')}}">Registrar Actividad</a></li>
+            <li><a href="{{url_for('graficos')}}">Métricas</a></li>
         </ul>
     </nav>
     <main>
@@ -27,17 +27,25 @@
                 <h3 id="val-msg-actividad">Formulario con errores:</h3>
                 <ul id="val-list-actividad"></ul>
             </div>
-            <form name="formularioActividades" id="formulario-actividades">
+            <form action="{{url_for('registro_actividades')}}" method="POST" enctype="multipart/form-data" id="formulario-actividades" name="formularioActividades">
                 <fieldset>
                     <legend>Datos</legend>
+                    <label for="miembro_id">Seleccione el Miembro asociado (*):</label>
+                    <select name="miembro_id" id="miembro_id" required>
+                        <option value="">Seleccione un miembro</option>
+                        {% for miembro in miembros %}
+                            <option value="{{miembro.id}}">{{miembro.nombre}} ({{miembro.email}})</option>
+                        {% endfor %}
+                    </select><br><br>
                     <label for="tipo-actividad">Tipo de Actividad (*):</label>
                     <select name="tipo-actividad" id="tipo-actividad">
                         <option value="">Seleccione el tipo</option>
-                        <option value="artistica">Artística</option>
-                        <option value="deportiva">Deportiva</option>
-                        <option value="tecnologica">Tecnológica</option>
+                        <option value="arte">Artística</option>
+                        <option value="deporte">Deportiva</option>
+                        <option value="tecnología">Tecnológica</option>
                         <option value="social">Social</option>
-                        <option value="recreativa">Recreativa</option>
+                        <option value="recreación">Recreativa</option>
+                        <option value="otra">Recreativa</option>
                     </select><br><br>
                     <label for="nombre-actividad">Nombre de la Actividad (*):</label>
                     <input type="text" name="nombre-actividad" id="nombre-actividad"><br><br>
@@ -101,7 +109,7 @@
                 </fieldset>
                 <br>
                 <p><small><em>* Todos los campos marcados con asterisco son obligatorios.</em></small></p>
-                <button id="boton-registrar-actividad" type="button">Registrar Actividad</button>
+                <button id="boton-registrar-actividad" type="submit">Registrar Actividad</button>
             </form>
         </section>
     </main>

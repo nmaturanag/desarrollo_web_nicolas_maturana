@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indicadores y Métricas</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
 <body>
     <header>
@@ -12,11 +12,11 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
-            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
-            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
-            <li><a href="graficos.html">Métricas</a></li>
+            <li><a href="{{url_for('index')}}">Inicio</a></li>
+            <li><a href="{{url_for('listado_miembros')}}">Listado de Miembros</a></li>
+            <li><a href="{{url_for('registro_miembros')}}">Registrar Miembro</a></li>
+            <li><a href="{{url_for('registro_actividades')}}">Registrar Actividad</a></li>
+            <li><a href="{{url_for('graficos')}}">Métricas</a></li>
         </ul>
     </nav>
     <main>

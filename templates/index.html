@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades Extracurriculares DCC</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{url_for('index')}}">Inicio</a></li>
+            <li><a href="{{url_for('listado_miembros')}}">Listado de Miembros</a></li>
+            <li><a href="{{url_for('registro_miembros')}}">Registrar Miembro</a></li>
+            <li><a href="{{url_for('registro_actividades')}}">Registrar Actividad</a></li>
+            <li><a href="{{url_for('graficos')}}">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Bienvenido al Sistema de Gestión de Actividades</h2>
+            <p>Este portal permite a los estudiantes, académicos y funcionarios del DCC registrar y compartir sus actividades extracurriculares.</p>
+            <p>Utilice el menú superior para inscribir sus actividades o revisar métricas sobre las actividades ya inscritas.</p>
+        </section>
+        <h3>Últimos 5 miembros</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for miembro in miembros %}
+                <tr>
+                    <td>{{miembro.nombre}}</td>
+                    <td>{{miembro.email}}</td>
+                    <td>{{miembro.telefono}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+    </main>
+</body>
+</html>

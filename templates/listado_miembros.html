@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Miembros</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{url_for('index')}}">Inicio</a></li>
+            <li><a href="{{url_for('listado_miembros')}}">Listado de Miembros</a></li>
+            <li><a href="{{url_for('registro_miembros')}}">Registrar Miembro</a></li>
+            <li><a href="{{url_for('registro_actividades')}}">Registrar Actividad</a></li>
+            <li><a href="{{url_for('graficos')}}">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Listado de Miembros de la Comunidad DCC</h2>
+            <p>Acá puede buscar a los miembros registrados en el sistema.</p>
+            
+            <fieldset>
+                <legend>Opciones de Búsqueda</legend>
+                
+                <label for="filtro-tipo">Filtrar por Tipo:</label>
+                <select id="filtro-tipo" name="filtro-tipo">
+                    <option value="todos">Todos</option>
+                    <option value="estudiante">Estudiante</option>
+                    <option value="académico">Académico</option>
+                    <option value="funcionario">Funcionario</option>
+                </select>
+
+                <label for="ordenar-por">Ordenar por:</label>
+                <select id="ordenar-por" name="ordenar-por">
+                    <option value="nombre">Nombre</option>
+                    <option value="correo">Correo Electrónico</option>
+                </select>
+
+                <button id="boton-aplicar-filtros" type="button">Aplicar Filtros</button>
+            </fieldset>
+            <br>
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo(s)</th>
+                        <th>Correo Electrónico</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-miembros">
+                    {% for miembro in pagination.items %}
+                    <tr onclick="window.location='{{url_for('detalle_miembro', miembro_id=miembro.id)}}';" style="cursor: pointer;">
+                        <td>{{ miembro.nombre }}</td>
+                        <td>{{ miembro.email }}</td>
+                        <td>{{ miembro.telefono }}</td>
+                        <td><a href="{{ url_for('detalle_miembro', miembro_id=miembro.id) }}">Ver actividades</a></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">No hay miembros registrados aún.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <nav>
+                <ul class="paginacion">
+                    <li>
+                        {% if pagination.has_prev %}
+                            <a href="{{url_for('listado_miembros', page=pagination.prev_num)}}">
+                                <button>Anterior</button>
+                            </a>
+                        {% else %}
+                            <button disabled>Anterior</button>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <span>Página {{pagination.page}} de {{pagination.pages}}</span>
+                    </li>
+                    <li>
+                        {% if pagination.has_next %}
+                            <a href="{{url_for('listado_miembros', page=pagination.next_num)}}">
+                                <button>Siguiente</button>
+                            </a>
+                        {% else %}
+                            <button disabled>Siguiente</button>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+    <script src="js/filter_list.js"></script>
+    </body>
+</html>
