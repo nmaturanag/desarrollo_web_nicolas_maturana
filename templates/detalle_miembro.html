@@ -33,10 +33,33 @@
             {% if actividades %}
                 <ul>
                     {% for actividad in actividades %}
-                        <li>
-                            {{actividad.nombre}} ({{actividad.tipo}})<br>
-                            Día: {{actividad.dia}} | Inicio: {{actividad.hora_inicio}} | Duración: {{actividad.duracion}}<br>
-                            Descripción: {{actividad.descripcion}}
+                        <li class="actividad-item">
+                            <strong>{{actividad.nombre}}</strong> ({{actividad.tipo}})<br>
+                            
+                            <div class="comentarios-container" data-actividad-id="{{actividad.id}}">
+                                <p>Cargando comentarios...</p>
+                            </div>
+
+                            <form class="form-comentario" data-actividad-id="{{actividad.id}}">
+                                <label for="nombre-comentario-{{actividad.id}}">Nombre</label>
+                                <input
+                                    type="text"
+                                    id="nombre-comentario-{{actividad.id}}"
+                                    name="nombre"
+                                    placeholder="Escribe tu nombre"
+                                    minlength="3"
+                                    maxlength="80"
+                                >
+                                <label for="texto-comentario-{{actividad.id}}">Comentario</label>
+                                <textarea
+                                    id="texto-comentario-{{actividad.id}}"
+                                    name="texto"
+                                    rows="4"
+                                    cols="50"
+                                    placeholder="Escribe un comentario"
+                                ></textarea>
+                                <button type="submit">Agregar comentario</button>
+                            </form>
                         </li>
                     {% endfor %}
                 </ul>
@@ -44,8 +67,9 @@
                 <p>Este miembro no tiene actividades registradas.</p>
             {% endif %}
             <br>
-            <a href="{{url_for('listado_miembros')}}"><button type="button">Volver al Listado</button></a>
+            <a href="{{url_for('listado_miembros')}}">Volver al Listado</a>
         </section>
     </main>
+    <script src="{{url_for('static', filename='js/comments.js')}}"></script>
 </body>
 </html>

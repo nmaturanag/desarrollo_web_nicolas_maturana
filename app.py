@@ -1,8 +1,9 @@
 import os
 
 from datetime import datetime
-from flask import (Flask, redirect, render_template, request, url_for)
+from flask import (Flask, jsonify, redirect, render_template, request, url_for)
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 
 
@@ -40,12 +41,36 @@ class Actividad(db.Model):
     descripcion = db.Column(db.Text)
 
 
+class Comuna(db.Model):
+    __tablename__ = 'comuna'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    region_id = db.Column(db.Integer, nullable=False)
+
+
 class Foto(db.Model):
     __tablename__ = 'foto'
     id = db.Column(db.Integer, primary_key=True)
     ruta_archivo = db.Column(db.String(300), nullable=False)
     nombre_archivo = db.Column(db.String(300), nullable=False)
     actividad_id = db.Column(db.Integer, db.ForeignKey('actividad.id'), nullable=False)
+
+
+class Comentario(db.Model):
+    __tablename__ = 'comentario'
+    id = db.Column(db.Integer, primary_key=True)
+    actividad_id = db.Column(db.Integer, db.ForeignKey('actividad.id'), nullable=False)
+    nombre_comentarista = db.Column(db.String(80), nullable=False)
+    texto = db.Column(db.Text, nullable=False)
+    fecha_hora = db.Column(db.DateTime, default=datetime.now)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre_comentarista,
+            "texto": self.texto,
+            "fecha": self.fecha_hora.strftime("%Y-%m-%d %H:%M:%S")
+        }
 
 
 @app.route('/')
@@ -66,26 +91,60 @@ def listado_miembros():
 
 @app.route('/registro_miembros', methods=['GET', 'POST'])
 def registro_miembros():
+    comunas = Comuna.query.order_by(Comuna.nombre.asc()).all()
+
     if request.method == 'GET':
-        return render_template('registro_miembros.html')
+        return render_template('registro_miembros.html', comunas=comunas)
     
     elif request.method == 'POST':
-        name_form = request.form.get('nombre')
-        email_form = request.form.get('email')
-        phone_form = request.form.get('phone')
+        name_form = request.form.get('nombre', '').strip()
+        email_form = request.form.get('email', '').strip()
+        phone_form = request.form.get('phone', '').strip()
+        comuna_id_form = request.form.get('comuna_id', type=int)
         
         # validacion
         if not name_form:
-            return render_template('registro_miembros.html', error="Por favor ingresar un nombre válido")
+            return render_template(
+                'registro_miembros.html',
+                comunas=comunas,
+                error="Por favor ingresar un nombre válido"
+            )
         
         if not email_form:
-            return render_template('registro_miembros.html', error="Por favor ingresar un email válido")
+            return render_template(
+                'registro_miembros.html',
+                comunas=comunas,
+                error="Por favor ingresar un email válido"
+            )
+        
+        if not phone_form:
+            return render_template(
+                'registro_miembros.html',
+                comunas=comunas,
+                error="Por favor ingresar un teléfono válido"
+            )
+
+        if not comuna_id_form:
+            return render_template(
+                'registro_miembros.html',
+                comunas=comunas,
+                error="Por favor seleccionar una comuna"
+            )
+
+        comuna = Comuna.query.get(comuna_id_form)
+
+        if not comuna:
+            return render_template(
+                'registro_miembros.html',
+                comunas=comunas,
+                error="La comuna seleccionada no existe"
+            )
         
         new_member = Miembro(
             nombre=name_form, 
             email=email_form, 
             telefono=phone_form,
-            comuna_id=10101,
+            comuna_id=comuna_id_form,
             fecha_registro=datetime.now()
         )
         
@@ -153,7 +212,6 @@ def registro_actividades():
         db.session.commit()
         return redirect(url_for('index'))
 
-# los dejé como en la T1 por falta de tiempo :(
 @app.route('/graficos')
 def graficos():
     return render_template('graficos.html')
@@ -164,6 +222,119 @@ def detalle_miembro(miembro_id):
     miembro = Miembro.query.get_or_404(miembro_id)
     actividades = Actividad.query.filter_by(miembro_id=miembro_id).all()
     return render_template('detalle_miembro.html', miembro=miembro, actividades=actividades)
+
+
+@app.route('/actividad/<int:actividad_id>')
+def detalle_actividad(actividad_id):
+    actividad = Actividad.query.get_or_404(actividad_id)
+    miembro = Miembro.query.get_or_404(actividad.miembro_id)
+    fotos = Foto.query.filter_by(actividad_id=actividad_id).all()
+    return render_template(
+        'detalle_actividad.html',
+        actividad=actividad,
+        miembro=miembro,
+        fotos=fotos
+    )
+
+
+@app.route('/api/comentarios', methods=['POST'])
+def agregar_comentario():
+    data = request.get_json()
+    if not data:
+        return jsonify({"status": "error", "message": "Solicitud inválida."}), 400
+    
+    actividad_id = data.get('actividad_id')
+    nombre = data.get('nombre', '').strip()
+    texto = data.get('texto', '').strip()
+    
+    if not (3 <= len(nombre) <= 80):
+        return jsonify({"status": "error", "message": "El nombre debe tener entre 3 y 80 caracteres."}), 400
+        
+    if len(texto) < 5:
+        return jsonify({"status": "error", "message": "El comentario debe tener al menos 5 caracteres."}), 400
+
+    try:
+        nuevo_comentario = Comentario(
+            actividad_id=actividad_id,
+            nombre_comentarista=nombre,
+            texto=texto,
+            fecha_hora=datetime.now()
+        )
+        db.session.add(nuevo_comentario)
+        db.session.commit()
+        
+        return jsonify({"status": "success", "message": "Comentario agregado exitosamente.", "comentario": nuevo_comentario.to_dict()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/api/comentarios/<int:actividad_id>', methods=['GET'])
+def obtener_comentarios(actividad_id):
+    comentarios = Comentario.query.filter_by(
+        actividad_id=actividad_id
+    )
+    comentarios = comentarios.order_by(
+        Comentario.fecha_hora.desc()
+    ).all()
+    
+    resultado = [c.to_dict() for c in comentarios]
+    return jsonify(resultado), 200
+
+
+@app.route('/api/estadisticas', methods=['GET'])
+def obtener_estadisticas():
+    miembros_por_dia = (
+        db.session.query(
+            func.date(Miembro.fecha_registro).label('fecha'),
+            func.count(Miembro.id).label('cantidad')
+        )
+        .group_by(func.date(Miembro.fecha_registro))
+        .order_by(func.date(Miembro.fecha_registro))
+        .all()
+    )
+    
+    datos_lineas = {
+        "labels": [str(m.fecha) for m in miembros_por_dia],
+        "data": [m.cantidad for m in miembros_por_dia]
+    }
+
+    actividades_tipo = (
+        db.session.query(
+            Actividad.tipo,
+            func.count(Actividad.id).label('cantidad')
+        )
+        .group_by(Actividad.tipo)
+        .all()
+    )
+
+    datos_torta = {
+        "labels": [a.tipo for a in actividades_tipo],
+        "data": [a.cantidad for a in actividades_tipo]
+    }
+
+    actividades_comuna = (
+        db.session.query(
+            Comuna.nombre,
+            func.count(Actividad.id).label('cantidad')
+        )
+        .select_from(Actividad)
+        .join(Miembro, Actividad.miembro_id == Miembro.id)
+        .join(Comuna, Miembro.comuna_id == Comuna.id)
+        .group_by(Comuna.nombre)
+        .all()
+    )
+
+    datos_barras = {
+        "labels": [c.nombre for c in actividades_comuna],
+        "data": [c.cantidad for c in actividades_comuna]
+    }
+
+    return jsonify({
+        "lineas": datos_lineas,
+        "torta": datos_torta,
+        "barras": datos_barras
+    })
 
 
 if __name__ == '__main__':

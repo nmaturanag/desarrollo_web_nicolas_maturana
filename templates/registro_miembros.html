@@ -36,6 +36,13 @@
                     <input type="email" name="email" id="email"><br><br>
                     <label for="phone">Teléfono de Contacto:</label>
                     <input type="text" name="phone" id="phone"><br><br>
+                    <label for="comuna_id">Comuna</label>
+                    <select id="comuna_id" name="comuna_id">
+                        <option value="">Seleccione su comuna</option>
+                        {% for comuna in comunas %}
+                            <option value="{{comuna.id}}"> {{comuna.nombre}} </option>
+                        {% endfor %}
+                    </select>
                 </fieldset>
                 <fieldset>
                     <legend>Rol en el Departamento</legend>
