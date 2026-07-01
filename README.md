@@ -1,43 +1,5 @@
-# Tarea 1
+# Tarea 4
 
-## Ejecución
+El proyecto tiene la estructura de carpetas requerida por Spring Boot.
 
-Para ejecutar hay que copiar el proyecto y hacer doble click en index.html
-
-## Diseño
-
-### HTML
-
-Se dejó cada página en un html aparte, incluyendo el listado de miembros que podría haberse dejado en la página principal, pero me pareció más ordenado así.
-
-En gráficos.html puse como ejemplo un par de métricas y un par de gráficos que me parecieron interesantes. Los datos son inventados.
-
-### CSS
-
-Un diseño básico, toda la parte estética se maneja en el css (en vez de los html).
-
-### JS
-
-En el archivo validation.js se revisa que los campos de inscripción de personas y actividades tengan los requisitos mínimos.
-
-En select.js se maneja la selección de roles en la inscripción (estudiante, académico y funcionario). Permití selección múltiple porque en teoría una persona podría tener más de un rol (un estudiante de doctorado que también es profesor por ejemplo).
-
-En filter_list.js está la lógica para filtrar la mini tabla de listado_miembros.html.
-
-# Tarea 2
-
-### Flask
-
-- Agregué un html para los detalles de un miembro específico porque se pedía.
-- Las categorías de actividades también fueron ajstadas a lo que salía en la base de datos.
-- Como no había columna de tipo de miembro (funcionario, estudiante, etc.), quite eso de la tabla de miembros para que coincida con la base de datos. Me faltó un selector de comunas, por ahora se usa el mismo id de comuna para todos (10101, la primera).
-- Las métricas se mantuvieron como antes (gráficos de ejemplo con datos inventados). La verdad no alcancé a modificarlos por código, pero de todas formas para que se vieran habría que insertar como 100 miembros y actividades de varios tipos, y como en el enunciado no se mencionaba esto decidí dejarlo así.
-
-Fuera de eso la página es similar a antes.
-
-# Tarea 3
-
-- Se implementaron los gráficos solicitados: n° de miembros registrados por día, total de actividades por tipo (torta) y total de actividades por comuna.
-- Se agregó la funcionalidad de dejar comentarios en las actividades. Para testear eso se puede ir a "Listado de Miembros", en algún miembro inscrito "Ver Actividades", y luego se puede dejar un comentario con nombre en alguna actividad inscrita.
-- Para esto se agregaron archivos comments.js y plots.js. También se agregaron las clases y métodos necesarios a app.py, como agregar_comentario().
-- En la T2 no había alcanzado a agregar bien la comuna (había quedado fija), ahora arreglé eso y se pide al usuario elegir su comuna al registrarse.
+- src/main/com/actividades: se definen las tablas, con sus repositorios y controladores. Las tablas y repositorios son estándar, con las columnas que vienen dadas por la base de datos. En los controladores está la lógica de la aplicación.

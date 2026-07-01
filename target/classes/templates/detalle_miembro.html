@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Miembro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
+            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
+            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
+            <li><a href="graficos.html">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Detalles del Miembro</h2>
+            <fieldset>
+                <legend>Información Personal</legend>
+                <p>Nombre: <span id="nombre-miembro"></span></p>
+                <p>Email: <span id="email-miembro"></span></p>
+                <p>Teléfono: <span id="telefono-miembro"></span></p>
+                <p>Fecha de Registro: <span id="fecha-miembro"></span></p>
+            </fieldset>
+            <h3>Actividades Registradas</h3>
+            <ul id="lista-actividades"></ul>
+            <template id="plantilla-actividad">
+
+                <li class="actividad-item">
+                    <strong><span class="act-nombre"></span></strong> (<span class="act-tipo"></span>)<br>
+                    
+                    <div class="comentarios-container">
+                        <p>Cargando comentarios...</p>
+                    </div>
+                    
+                    <form class="form-comentario">
+                        <label>Nombre</label>
+                        <input
+                            type="text"
+                            name="nombre"
+                            class="input-nombre"
+                            placeholder="Escribe tu nombre"
+                            minlength="3"
+                            maxlength="80"
+                        >
+                        
+                        <label>Comentario</label>
+                        <textarea
+                            name="texto"
+                            class="input-texto"
+                            rows="4"
+                            cols="50"
+                            placeholder="Escribe un comentario"
+                        ></textarea>
+                        
+                        <button type="submit">Agregar comentario</button>
+                    </form>
+
+                    <hr> <form class="form-nota">
+                        <label>Evaluar Actividad (1-7)</label>
+                        <input type="number" name="valor" class="input-nota" min="1" max="7">
+                        <button type="submit">Enviar Nota</button>
+                    </form> <hr>
+                </li>
+            </template>
+            <br>
+            <a href="listado_miembros.html">Volver al Listado</a>
+        </section>
+    </main>
+    <script src="js/comments.js"></script>
+    <script src="js/detalle_miembro.js"></script>
+</body>
+</html>

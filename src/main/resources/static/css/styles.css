@@ -1,0 +1,99 @@
+body {
+    font-family: sans-serif;
+    background-color: lightgray;
+    margin: 20px;
+    line-height: 1.5;
+}
+
+header {
+    background-color: navy;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+nav {
+    background-color: black;
+    padding: 10px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid gray;
+}
+
+fieldset {
+    border: 2px solid black;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 5px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="number"], 
+input[type="url"], 
+select {
+    width: 95%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: darkblue;
+}
+
+#val-box-miembro, #val-box-actividad {
+    background-color: pink;
+    color: red;
+    border: 3px solid red;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: lightblue;
+}

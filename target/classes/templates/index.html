@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades Extracurriculares DCC</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
+            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
+            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
+            <li><a href="graficos.html">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Bienvenido al Sistema de Gestión de Actividades</h2>
+            <p>Este portal permite a los estudiantes, académicos y funcionarios del DCC registrar y compartir sus actividades extracurriculares.</p>
+            <p>Utilice el menú superior para inscribir sus actividades o revisar métricas sobre las actividades ya inscritas.</p>
+        </section>
+        <h3>Últimos 5 miembros</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-ultimos-miembros">
+                <tr>
+                    <td colspan="3">Cargando miembros</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <template id="plantilla-fila-miembro">
+            <tr>
+                <td class="miembro-nombre"></td>
+                <td class="miembro-email"></td>
+                <td class="miembro-telefono"></td>
+            </tr>
+        </template>
+    </main>
+    <script src="js/index.js"></script>
+</body>
+</html>

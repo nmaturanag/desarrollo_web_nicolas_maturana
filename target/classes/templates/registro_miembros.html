@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Miembros</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
+            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
+            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
+            <li><a href="graficos.html">Métricas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Formulario de Registro de Miembros</h2>
+            <form id="formulario-miembros" name="formularioMiembros">
+                <p>Ingrese sus datos.</p>
+                <div id="val-box-miembro" hidden>
+                    <h3 id="val-msg-miembro">Formulario con errores:</h3>
+                    <ul id="val-list-miembro"></ul>
+                </div>
+                <fieldset>
+                    <legend>Datos Personales</legend>
+                    <label for="nombre">Nombre Completo (*):</label>
+                    <input type="text" name="nombre" id="nombre"><br><br>
+                    <label for="email">Correo Electrónico (*):</label>
+                    <input type="email" name="email" id="email"><br><br>
+                    <label for="phone">Teléfono de Contacto:</label>
+                    <input type="text" name="phone" id="phone"><br><br>
+                    <label for="comuna_id">Comuna</label>
+                    <select id="comuna_id" name="comuna_id">
+                        <option value="">Cargando comunas...</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <legend>Rol en el Departamento</legend>
+                    <p>Tipo de Miembro (Puede marcar varios) (*):</p>
+                    <label><input type="checkbox" name="tipo" value="estudiante" class="check-tipo"> Estudiante</label><br>
+                    <label><input type="checkbox" name="tipo" value="academico" class="check-tipo"> Académico</label><br>
+                    <label><input type="checkbox" name="tipo" value="funcionario" class="check-tipo"> Funcionario</label><br><br>
+                    
+                    <div id="bloque-estudiante" style="display: none;">
+                        <h4>Datos de Estudiante</h4>
+                        <label for="carrera">Carrera o Programa de Estudios (*):</label>
+                        <input type="text" name="carrera" id="carrera" placeholder="Ej: Ingeniería en Computación"><br><br>
+                    </div>
+                    <div id="bloque-academico" style="display: none;">
+                        <h4>Datos de Académico</h4>
+                        <label for="departamento">Departamento (*):</label>
+                        <input type="text" name="departamento" id="departamento"><br>
+                    </div>
+                    <div id="bloque-funcionario" style="display: none;">
+                        <h4>Datos de Funcionario</h4>
+                        <label for="cargo">Cargo (*):</label>
+                        <input type="text" name="cargo" id="cargo"><br><br>
+                    </div>
+                </fieldset>
+                <br>
+                <p><small><em>* Los campos marcados con asterisco son obligatorios.</em></small></p>
+                <button id="boton-registrar-miembro" type="submit">Registrar Miembro</button>
+            </form>
+        </section>
+    </main>
+    <script src="js/select.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/registro_miembros.js"></script>
+</body>
+</html>
