@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import java.util.List;
 
 @Entity
 public class Actividad {
@@ -17,6 +20,30 @@ public class Actividad {
     private String tipo;
     private String nombre;
     private String descripcion;
+
+    @OneToMany
+    @JoinColumn(name="actividad_id")
+    private List<Comentario> comentarios;
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    @OneToMany
+    @JoinColumn(name="actividad_id")
+    private List<Nota> notas;
+
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
+    }
 
     public Integer getId() {
         return id;

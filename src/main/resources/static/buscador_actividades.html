@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Actividades</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Calidad de Vida DCC</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listado_miembros.html">Listado de Miembros</a></li>
+            <li><a href="registro_miembros.html">Registrar Miembro</a></li>
+            <li><a href="registro_actividades.html">Registrar Actividad</a></li>
+            <li><a href="graficos.html">Métricas</a></li>
+            <li><a href="buscador_actividades.html">Buscador de Actividades</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Buscador de Actividades</h2>
+            <fieldset>
+                <legend>Búsqueda</legend>
+                <label for="input-busqueda">Buscar actividad:</label>
+                <input type="text" id="input-busqueda">
+            </fieldset>
+            <br>
+            <div id="resultados-busqueda">
+                <p>Escribe al menos 3 caracteres para buscar</p>
+            </div>
+
+            <template id="plantilla-resultado">
+                <li class="resultado-item">
+                    <p><strong>Actividad:</strong> <span class="res-nombre"></span></p>
+                    <p><strong>Miembro:</strong> <span class="res-miembro"></span></p>
+                    <p><strong>Día:</strong> <span class="res-dia"></span></p>
+                    <p><strong>Tipo:</strong> <span class="res-tipo"></span></p>
+                    <p><strong>Comuna:</strong> <span class="res-comuna"></span></p>
+                    <p><strong>Descripción:</strong> <span class="res-descripcion"></span></p>
+                    <p>Nota promedio: <span class="res-promedio">-</span></p>
+                    <hr>
+                </li>
+            </template>
+        </section>
+    </main>
+    <script src="js/buscador_actividades.js"></script>
+</body>
+</html>

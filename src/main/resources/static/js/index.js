@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarUltimosMiembros();
 });
 
+
 function cargarUltimosMiembros() {
     const tbody = document.getElementById('tabla-ultimos-miembros');
     const plantilla = document.getElementById('plantilla-fila-miembro').content;

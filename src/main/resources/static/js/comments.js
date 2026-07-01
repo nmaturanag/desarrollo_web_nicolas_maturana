@@ -37,10 +37,10 @@ async function cargarComentarios(actividadId, container) {
             const p = document.createElement("p");
 
             const nombre = document.createElement("strong");
-            nombre.textContent = comentario.nombre;
+            nombre.textContent = comentario.nombreComentarista;
 
             const resto = document.createTextNode(
-                ` (${comentario.fecha}): ${comentario.texto}`
+                ` (${comentario.fechaHora}): ${comentario.texto}`
             );
 
             p.appendChild(nombre);
@@ -69,19 +69,15 @@ async function enviarComentario(form, actividadId) {
         return;
     }
 
-    const formData = {
-        actividad_id: parseInt(actividadId),
-        nombre: nombre,
-        texto: texto
-    };
+    const formData = new URLSearchParams();
+    formData.append('actividad_id', parseInt(actividadId));
+    formData.append('nombre', nombre);
+    formData.append('texto', texto);
 
     try {
-        const response = await fetch("/api/comentarios", {
+        const response = await fetch("/api/comentarios/add", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
+            body: formData
         });
 
         if (response.ok) {

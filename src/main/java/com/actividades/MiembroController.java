@@ -33,13 +33,15 @@ public class MiembroController {
         m.setTelefono(telefono);
         m.setComunaId(comuna_id);
         
-        m.setFechaRegistro(LocalDateTime.now()); 
-        
+        java.time.format.DateTimeFormatter formato = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        m.setFechaRegistro(java.time.LocalDateTime.now().format(formato));
+        //m.setFechaRegistro("2026-06-30 23:59:00");
+
         miembroRepository.save(m);
         
         return "Agregado nuevo miembro";
     }
-    
+
     @GetMapping("/{id}")
     @ResponseBody
     public Miembro one(@PathVariable Integer id) {

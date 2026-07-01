@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     cargarMiembros();
-    configurarActividad();
+    registrarActividad();
 });
 
 
@@ -22,7 +22,7 @@ function cargarMiembros() {
 }
 
 
-function configurarActividad() {
+function registrarActividad() {
     const formulario = document.getElementById('formulario-actividades');
 
     formulario.addEventListener('submit', (evento) => {

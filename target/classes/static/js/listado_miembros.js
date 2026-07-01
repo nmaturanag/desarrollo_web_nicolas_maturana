@@ -2,6 +2,7 @@ let miembrosTotales = [];
 let paginaActual = 1;
 const miembrosPorPagina = 5;
 
+
 document.addEventListener('DOMContentLoaded', () => {
     cargarTodosLosMiembros();
     configurarBotonesPaginacion();

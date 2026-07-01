@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import java.util.List;
 
 @Entity
 public class Miembro {
@@ -15,6 +18,18 @@ public class Miembro {
     private String telefono;
     private String fecha_registro;
     private Integer comuna_id;
+
+    @OneToMany
+    @JoinColumn(name="miembro_id")
+    private List<Actividad> actividades;
+
+    public List<Actividad> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<Actividad> actividades) {
+        this.actividades = actividades;
+    }
 
     public Integer getId() {
         return id;

@@ -30,6 +30,8 @@ public class ActividadController {
         Actividad a = new Actividad();
         a.setMiembroId(miembro_id);
         a.setDia(dia);
+        a.setDuracion("");
+        a.setHoraInicio("");
         a.setTipo(tipo);
         a.setNombre(nombre);
         a.setDescripcion(descripcion);

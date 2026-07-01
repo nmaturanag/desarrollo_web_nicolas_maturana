@@ -17,6 +17,7 @@
             <li><a href="registro_miembros.html">Registrar Miembro</a></li>
             <li><a href="registro_actividades.html">Registrar Actividad</a></li>
             <li><a href="graficos.html">Métricas</a></li>
+            <li><a href="buscador_actividades.html">Buscador de Actividades</a></li>
         </ul>
     </nav>
     <main>
@@ -35,7 +36,7 @@
                         <option value="">Cargando miembros.</option>
                     </select><br><br>
                     <label for="tipo-actividad">Tipo de Actividad (*):</label>
-                    <select name="tipo-actividad" id="tipo-actividad">
+                    <select name="tipo" id="tipo-actividad">
                         <option value="">Seleccione el tipo</option>
                         <option value="arte">Artística</option>
                         <option value="deporte">Deportiva</option>
@@ -45,7 +46,7 @@
                         <option value="otra">Recreativa</option>
                     </select><br><br>
                     <label for="nombre-actividad">Nombre de la Actividad (*):</label>
-                    <input type="text" name="nombre-actividad" id="nombre-actividad"><br><br>
+                    <input type="text" name="nombre" id="nombre-actividad"><br><br>
                     <label for="descripcion">Descripción de la Actividad:</label><br>
                     <textarea name="descripcion" id="descripcion" rows="4" cols="40"></textarea><br><br>
                 </fieldset>
@@ -112,5 +113,6 @@
     </main>
     <script src="js/comments.js"></script>
     <script src="js/validation.js"></script>
+    <script src="js/registro_actividades.js"></script>
 </body>
 </html>
